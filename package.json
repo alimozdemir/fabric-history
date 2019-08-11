@@ -1,0 +1,26 @@
+{
+  "name": "fabric-history",
+  "version": "1.0.0",
+  "description": "Undo and redo implementations on fabric.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyzerk/fabric-history.git"
+  },
+  "keywords": [
+    "fabric",
+    "fabricjs",
+    "history",
+    "undo",
+    "redo"
+  ],
+  "author": "Alim Ozdemir <alm.ozdmr@gmail.com> (http://alimozdemir.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lyzerk/fabric-history/issues"
+  },
+  "homepage": "https://github.com/lyzerk/fabric-history#readme"
+}
