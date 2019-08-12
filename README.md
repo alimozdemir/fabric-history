@@ -12,13 +12,13 @@ Node projects
 import 'fabric-history';
 ```
 
-Html
+Or html
 ```html
 <script src="https://raw.githubusercontent.com/lyzerk/fabric-history/master/index.js"></script>
 ```
 
-Initialization of the plugin is important. It listening the actions by that event registrations.
-Don't call this `historyInit` more than once. And don't forget to disponse it.
+Initialization of the plugin is important, it listening the actions by that event registrations.
+Don't call `historyInit` more than once. And don't forget to dispose it.
 
 ## Example setup
 ```
