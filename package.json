@@ -1,6 +1,6 @@
 {
   "name": "fabric-history",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Undo and redo implementations on fabric.js",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lyzerk/fabric-history.git"
+  },
+  "dependencies": {
+    "fabric": "^3.3.2"
   },
   "keywords": [
     "fabric",
