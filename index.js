@@ -9,9 +9,9 @@ export default class Canvas extends fabric.Canvas {
     this._nextState = this._historyNext()
 
     this.on({
-      'object:added': this._historySave,
-      'object:removed': this._historySave,
-      'object:modified': this._historySave
+      'object:added': this._saveHistory,
+      'object:removed': this._saveHistory,
+      'object:modified': this._saveHistory
     })
   }
 
@@ -21,20 +21,19 @@ export default class Canvas extends fabric.Canvas {
 
   _historyDispose () {
     this.off({
-      'object:added': this._historySave,
-      'object:removed': this._historySave,
-      'object:modified': this._historySave
+      'object:added': this._saveHistory,
+      'object:removed': this._saveHistory,
+      'object:modified': this._saveHistory
     })
   }
 
-  _historySave () {
+  _saveHistory () {
     if (this._isProcessing) {
       return
     }
 
-    const json = this._nextState
+    this._undoList.push(this._nextState)
 
-    this._undoList.push(json)
     this._nextState = this._historyNext()
   }
 
@@ -57,7 +56,7 @@ export default class Canvas extends fabric.Canvas {
     const history = this._redoList.pop()
 
     if (history) {
-      this._historySave()
+      this._saveHistory()
       this.loadFromJSON(history).renderAll()
     }
 
