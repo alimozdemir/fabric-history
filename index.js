@@ -1,6 +1,14 @@
 import fabric from 'fabric'
 
 export default class Canvas extends fabric.Canvas {
+  get hasUndoItem () {
+    return this._undoList.length
+  }
+
+  get hasRedoItem () {
+    return this._redoList.length
+  }
+
   constructor (el, options) {
     super(el, options)
 
