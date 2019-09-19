@@ -1,70 +1,73 @@
+import fabric from 'fabric'
 
-fabric.Canvas.prototype.historyUndo = []
-fabric.Canvas.prototype.historyRedo = []
-
-fabric.Canvas.prototype.historyNext = function () {
-  return JSON.stringify(this.toDatalessJSON(this.extraProps));
-}
-
-fabric.Canvas.prototype.historyInit = function () {
-  this.historyUndo = [];
-  this.historyRedo = [];
-  this.historyNextState = this.historyNext();
-
-  this.on({
-    "object:added": this.historySaveAction,
-    "object:removed": this.historySaveAction,
-    "object:modified": this.historySaveAction
-  })
-
-}
-
-fabric.Canvas.prototype.historyDispose = function () {
-  this.off({
-    "object:added": this.historySaveAction,
-    "object:removed": this.historySaveAction,
-    "object:modified": this.historySaveAction
-  })
-}
-
-fabric.Canvas.prototype.historySaveAction = function () {
-  if (this.historyProcessing)
-    return;
-
-  const json = this.historyNextState;
-  this.historyUndo.push(json);
-  this.historyNextState = this.historyNext();
-}
-
-fabric.Canvas.prototype.undo = function () {
-  // The undo process will render the new states of the objects
-  // Therefore, object:added and object:modified events will triggered again
-  // To ignore those events, we are setting a flag.
-  this.historyProcessing = true;
-
-  const history = this.historyUndo.pop();
-  if (history) {
-    // Push the current state to the redo history
-    this.historyRedo.push(this.historyNext());
-
-    this.loadFromJSON(history).renderAll();
+export default class Canvas extends fabric.Canvas {
+  get hasUndoItem () {
+    return this._undoList.length
   }
 
-  this.historyProcessing = false;
-}
-
-fabric.Canvas.prototype.redo = function () {
-  // The undo process will render the new states of the objects
-  // Therefore, object:added and object:modified events will triggered again
-  // To ignore those events, we are setting a flag.
-  this.historyProcessing = true;
-  const history = this.historyRedo.pop();
-  if (history) {
-    // Every redo action is actually a new action to the undo history
-    this.historySaveAction();
-    
-    this.loadFromJSON(history).renderAll();
+  get hasRedoItem () {
+    return this._redoList.length
   }
 
-  this.historyProcessing = false;
+  constructor (el, options) {
+    super(el, options)
+
+    this._undoList = []
+    this._redoList = []
+    this._nextState = this._historyNext()
+
+    this.on({
+      'object:added': this._saveHistory,
+      'object:removed': this._saveHistory,
+      'object:modified': this._saveHistory
+    })
+  }
+
+  _historyNext () {
+    return JSON.stringify(this.toDatalessJSON(this.extraProps))
+  }
+
+  _historyDispose () {
+    this.off({
+      'object:added': this._saveHistory,
+      'object:removed': this._saveHistory,
+      'object:modified': this._saveHistory
+    })
+  }
+
+  _saveHistory () {
+    if (this._isProcessing) {
+      return
+    }
+
+    this._undoList.push(this._nextState)
+
+    this._nextState = this._historyNext()
+  }
+
+  undo () {
+    this._isProcessing = true
+
+    const history = this._undoList.pop()
+
+    if (history) {
+      this._redoList.push(this._historyNext())
+      this.loadFromJSON(history).renderAll()
+    }
+
+    this._isProcessing = false
+  }
+
+  redo () {
+    this._isProcessing = true
+
+    const history = this._redoList.pop()
+
+    if (history) {
+      this._saveHistory()
+      this.loadFromJSON(history).renderAll()
+    }
+
+    this._isProcessing = false
+  }
 }
