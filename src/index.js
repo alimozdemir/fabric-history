@@ -27,7 +27,11 @@ export default class Canvas extends fabric.Canvas {
     return JSON.stringify(this.toDatalessJSON(this.extraProps))
   }
 
-  _historyDispose () {
+  
+  /**
+   * This method should be called on disposing the canvas
+   */
+  historyDispose () {
     this.off({
       'object:added': this._saveHistory,
       'object:removed': this._saveHistory,
