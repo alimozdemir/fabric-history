@@ -1,0 +1,20 @@
+
+select {
+    height: 500px;
+    width: 100%;
+    border:none;
+}
+canvas {
+    border:1px solid black;
+    width:100%;
+}
+#wrapper-container {
+    display: inline-block;
+}
+#wrapper {
+    height:500px;
+    padding: 0;
+    border:none;  
+    font-size: 0.8rem;
+    line-height: 1.2; 
+}
