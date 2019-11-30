@@ -15,6 +15,8 @@
             <div class="col-6">
                 <canvas width="600" height="500"></canvas>
                 <button onclick="drawingMode()">Enable drawing mode</button>
+                <button onclick="undo()">Undo</button>
+                <button onclick="redo()">Redo</button>
             </div>
             <div class="col-2">
                 <select name="logs" id="logs" size="100">
@@ -53,7 +55,41 @@
         };
 
         var viewer = createJSONViewer(container, json, options);
+        function historyAppend(data) {
+            var logs = document.getElementById('logs');
+            logs.lastChild.selected = false;
 
+            var option = document.createElement('option');
+            option.value = data.json;
+            option.text = data.json.substring(0, 50);
+            logs.appendChild(option);
+
+            logs.lastChild.selected = true;
+        }
+
+        document.getElementById('logs').addEventListener('change', function (e) {
+            if (!(e.target.selectedOptions && e.target.selectedOptions.length === 1))
+                return;
+
+            var option = e.target.selectedOptions[0];
+            var val = JSON.parse(option.value);
+            var val2 = JSON.parse(JSON.stringify(val, (key, value) => {
+                if (value !== null) return value
+            }));
+            viewer.changeJSON(val2);
+        });
+
+        function drawingMode() {
+            isDrawingMode = !isDrawingMode;
+            canvas.set('isDrawingMode', isDrawingMode);
+        }
+        function undo() {
+            canvas.undo();
+        }
+        function redo() {
+            canvas.redo();
+        }
+        
         document.addEventListener('keyup', ({ keyCode, ctrlKey } = event) => {
             // Check Ctrl key is pressed.
             if (!ctrlKey) {
@@ -70,37 +106,6 @@
                 canvas.redo()
             }
         });
-
-        function historyAppend(data) {
-            var logs = document.getElementById('logs');
-            logs.lastChild.selected = false;
-
-            var option = document.createElement('option');
-            option.value = data.json;
-            option.text = data.json.substring(0, 50);
-            logs.appendChild(option);
-
-            logs.lastChild.selected = true;
-        }
-        function drawingMode() {
-            isDrawingMode = !isDrawingMode;
-            canvas.set('isDrawingMode', isDrawingMode);
-
-        }
-
-        document.getElementById('logs').addEventListener('change', function (e) {
-            if (!(e.target.selectedOptions && e.target.selectedOptions.length === 1))
-                return;
-
-            var option = e.target.selectedOptions[0];
-            var val = JSON.parse(option.value);
-            var val2 = JSON.parse(JSON.stringify(val, (key, value) => {
-                if (value !== null) return value
-            }));
-            viewer.changeJSON(val2);
-            // document.getElementById('textarea').innerHTML = JSON.stringify(val, undefined, 4)
-        });
-
     </script>
 </body>
 
