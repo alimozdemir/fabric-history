@@ -62,6 +62,7 @@ fabric.Canvas.prototype._historyDispose = function () {
  * It pushes the state of the canvas into history stack
  */
 fabric.Canvas.prototype._historySaveAction = function () {
+
   if (this.historyProcessing)
     return;
 
@@ -104,7 +105,7 @@ fabric.Canvas.prototype.redo = function () {
   const history = this.historyRedo.pop();
   if (history) {
     // Every redo action is actually a new action to the undo history
-    this._historySaveAction();
+    this.historyUndo.push(this._historyNext());
     
     this.loadFromJSON(history).renderAll();
   }
