@@ -83,7 +83,7 @@ You can find an advanced example on demo folder.
 - history:clear
   - Fired when whole history cleared
 
-# Methods
+# Functions
 
 - undo
 - redo
