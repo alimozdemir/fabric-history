@@ -1,36 +1,23 @@
 # fabric-history
-Basic undo and redo prototype implementation on Fabric.js
+![npm](https://img.shields.io/npm/v/fabric-history)
+
+Fabric.js history implementation
 
 # Setup
 
+## Node projects
 ```bash
 npm i fabric-history
 ```
 
-Node projects
 ```javascript
 import 'fabric-history';
 ```
 
-Or html
+## HTML
 
 ```html
-<script src="//raw.githubusercontent.com/lyzerk/fabric-history/master/index.js"></script>
-```
-
-Initialization of the plugin is important, it listening the actions by that event registrations.
-Don't call `historyInit` more than once. And don't forget to dispose it.
-
-## Example setup
-
-```
-const canvas = new fabric.Canvas('canvas');
-
-// historyInit is registers the events
-canvas.historyInit();
-
-// historyDispose is un-register the events
-canvas.historyDispose();
+<script src="https://raw.githubusercontent.com/lyzerk/fabric-history/master/src/index.js"></script>
 ```
 
 # Usage
@@ -43,7 +30,7 @@ canvas.undo();
 canvas.redo();
 ```
 
-## Example
+# Example
 
 ```html
 <!doctype html>
@@ -54,8 +41,11 @@ canvas.redo();
 </head>
 <body>
   <canvas></canvas>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.4.0/fabric.min.js"></script>
+  <script src="//raw.githubusercontent.com/lyzerk/fabric-history/master/src/index.js"></script>
+
   <script>
-    const canvas = new Canvas(document.querySelector('canvas'), {
+    const canvas = new fabric.Canvas(document.querySelector('canvas'), {
       isDrawingMode: true
     })
 
@@ -79,3 +69,22 @@ canvas.redo();
 </body>
 </html>
 ```
+
+You can find an advanced example on demo folder.
+
+# Events
+
+- history:append
+  - Fired when a history appended to stack
+- history:undo
+  - Fired when an undo process is happening
+- history:redo
+  - Fired when a redo process is happening
+- history:clear
+  - Fired when whole history cleared
+
+# Methods
+
+- undo
+- redo
+- clear

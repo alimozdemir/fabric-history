@@ -89,6 +89,7 @@ fabric.Canvas.prototype.undo = function () {
     this.historyRedo.push(this._historyNext());
 
     this.loadFromJSON(history).renderAll();
+    this.fire('history:undo');
   }
 
   this.historyProcessing = false;
@@ -108,6 +109,7 @@ fabric.Canvas.prototype.redo = function () {
     this.historyUndo.push(this._historyNext());
     
     this.loadFromJSON(history).renderAll();
+    this.fire('history:redo');
   }
 
   this.historyProcessing = false;
@@ -119,4 +121,5 @@ fabric.Canvas.prototype.redo = function () {
 fabric.Canvas.prototype.clearHistory = function() {
   this.historyUndo = [];
   this.historyRedo = [];
+  this.fire('history:clear');
 }

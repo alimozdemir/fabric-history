@@ -2,7 +2,7 @@
     "name": "fabric-history",
     "version": "1.1.0",
     "description": "Undo and redo implementations on fabric.js",
-    "main": "index.js",
+    "main": "src/index.js",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
     },
