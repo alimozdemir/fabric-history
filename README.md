@@ -1,5 +1,6 @@
 # fabric-history
-![npm](https://img.shields.io/npm/v/fabric-history)
+
+[![npm](https://img.shields.io/npm/v/fabric-history)](https://www.npmjs.com/package/fabric-history)
 
 Fabric.js history implementation
 
