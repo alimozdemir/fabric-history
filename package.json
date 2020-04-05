@@ -1,6 +1,6 @@
 {
     "name": "fabric-history",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Undo and redo implementations on fabric.js",
     "main": "src/index.js",
     "scripts": {
