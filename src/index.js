@@ -33,10 +33,10 @@ fabric.Canvas.prototype._historyNext = function () {
  */
 fabric.Canvas.prototype._historyEvents = function() {
   return {
-    "object:added": this._historySaveAction,
-    "object:removed": this._historySaveAction,
-    "object:modified": this._historySaveAction,
-    "object:skewing": this._historySaveAction
+    'object:added': this._historySaveAction,
+    'object:removed': this._historySaveAction,
+    'object:modified': this._historySaveAction,
+    'object:skewing': this._historySaveAction
   }
 }
 

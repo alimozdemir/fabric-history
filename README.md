@@ -25,7 +25,7 @@ import 'fabric-history';
 
 Following commands will undo and redo the canvas.
 
-```
+```javascript
 canvas.undo();
 
 canvas.redo();
@@ -84,8 +84,21 @@ You can find an advanced example on demo folder.
 - history:clear
   - Fired when whole history cleared
 
+# Callbacks
+
+
+```javascript
+canvas.undo(function() { 
+  console.log('post undo');
+});
+
+canvas.redo(function() { 
+  console.log('post redo');
+});
+```
+
 # Functions
 
 - undo
 - redo
-- clear
+- clearHistory

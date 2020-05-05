@@ -1,29 +1,33 @@
 {
-    "name": "fabric-history",
-    "version": "1.3.0",
-    "description": "Undo and redo implementations on fabric.js",
-    "main": "src/index.min.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/lyzerk/fabric-history.git"
-    },
-    "dependencies": {
-      "fabric": "^3.3.2"
-    },
-    "keywords": [
-      "fabric",
-      "fabricjs",
-      "history",
-      "undo",
-      "redo"
-    ],
-    "author": "Alim Ozdemir <alm.ozdmr@gmail.com> (http://alimozdemir.com)",
-    "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/lyzerk/fabric-history/issues"
-    },
-    "homepage": "https://github.com/lyzerk/fabric-history#readme"
+  "name": "fabric-history",
+  "version": "1.4.0",
+  "description": "Undo and redo implementations on fabric.js",
+  "main": "src/index.min.js",
+  "scripts": {
+    "minify": "uglifyjs --compress --mangle -o src/index.min.js -- src/index.js ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyzerk/fabric-history.git"
+  },
+  "dependencies": {
+    "fabric": "^3.3.2"
+  },
+  "keywords": [
+    "fabric",
+    "fabricjs",
+    "history",
+    "undo",
+    "redo"
+  ],
+  "author": "Alim Ozdemir <alm.ozdmr@gmail.com> (http://alimozdemir.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lyzerk/fabric-history/issues"
+  },
+  "homepage": "https://github.com/lyzerk/fabric-history#readme",
+  "devDependencies": {
+    "uglify-es": "^3.3.9"
   }
+}
