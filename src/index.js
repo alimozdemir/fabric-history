@@ -46,6 +46,7 @@ fabric.Canvas.prototype._historyEvents = function() {
 fabric.Canvas.prototype._historyInit = function () {
   this.historyUndo = [];
   this.historyRedo = [];
+  this.extraProps = ['selectable'];
   this.historyNextState = this._historyNext();
   
   this.on(this._historyEvents());
@@ -77,7 +78,7 @@ fabric.Canvas.prototype._historySaveAction = function () {
  * Pop the latest state of the history. Re-render.
  * Also, pushes into redo history.
  */
-fabric.Canvas.prototype.undo = function () {
+fabric.Canvas.prototype.undo = function (callback) {
   // The undo process will render the new states of the objects
   // Therefore, object:added and object:modified events will triggered again
   // To ignore those events, we are setting a flag.
@@ -88,17 +89,16 @@ fabric.Canvas.prototype.undo = function () {
     // Push the current state to the redo history
     this.historyRedo.push(this._historyNext());
 
-    this.loadFromJSON(history).renderAll();
-    this.fire('history:undo');
+    this._loadHistory(history, 'history:undo', callback);
+  } else {
+    this.historyProcessing = false;
   }
-
-  this.historyProcessing = false;
 }
 
 /**
  * Redo to latest undo history.
  */
-fabric.Canvas.prototype.redo = function () {
+fabric.Canvas.prototype.redo = function (callback) {
   // The undo process will render the new states of the objects
   // Therefore, object:added and object:modified events will triggered again
   // To ignore those events, we are setting a flag.
@@ -108,11 +108,23 @@ fabric.Canvas.prototype.redo = function () {
     // Every redo action is actually a new action to the undo history
     this.historyUndo.push(this._historyNext());
     
-    this.loadFromJSON(history).renderAll();
-    this.fire('history:redo');
+    this._loadHistory(history, 'history:redo', callback);
+  } else {
+    this.historyProcessing = false;
   }
+}
 
-  this.historyProcessing = false;
+fabric.Canvas.prototype._loadHistory = function(history, event, callback) {
+  var that = this;
+
+  this.loadFromJSON(history, function() {
+    that.renderAll();
+    that.fire(event);
+    that.historyProcessing = false;
+
+    if (callback && typeof callback === 'function')
+      callback();
+  });
 }
 
 /**
