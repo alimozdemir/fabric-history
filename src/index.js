@@ -88,7 +88,7 @@ fabric.Canvas.prototype.undo = function (callback) {
   if (history) {
     // Push the current state to the redo history
     this.historyRedo.push(this._historyNext());
-
+    this.historyNextState = history;
     this._loadHistory(history, 'history:undo', callback);
   } else {
     this.historyProcessing = false;
@@ -107,7 +107,7 @@ fabric.Canvas.prototype.redo = function (callback) {
   if (history) {
     // Every redo action is actually a new action to the undo history
     this.historyUndo.push(this._historyNext());
-    
+    this.historyNextState = history;
     this._loadHistory(history, 'history:redo', callback);
   } else {
     this.historyProcessing = false;
@@ -134,4 +134,20 @@ fabric.Canvas.prototype.clearHistory = function() {
   this.historyUndo = [];
   this.historyRedo = [];
   this.fire('history:clear');
+}
+
+/**
+ * Off the history
+ */
+fabric.Canvas.prototype.offHistory = function() {
+  this.historyProcessing = true;
+}
+
+/**
+ * On the history
+ */
+fabric.Canvas.prototype.onHistory = function() {
+  this.historyProcessing = false;
+
+  this._historySaveAction();
 }

@@ -35,7 +35,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.4.0/fabric.min.js"></script>
     <script src="libs/jsonviewer.js"></script>
-    <script src="../src/index.min.js"></script>
+    <script src="../src/index.js"></script>
     <script>
         let isDrawingMode = false;
         const canvas = new fabric.Canvas(document.querySelector('canvas'));
@@ -103,11 +103,15 @@
 
             // remove objects
             if (activeObjects.length > 0) {
-                activeObjects.forEach((object) => {
-                    if (!object.isEditing) {
-                        canvas.remove(object);
+                canvas.offHistory();
+
+                for (var i = 0; i < activeObjects.length; i++) {
+                    if (!activeObjects[i].isEditing) {
+                        canvas.remove(activeObjects[i]);
                     }
-                });
+                }
+
+                canvas.onHistory();
             }
         }
         
