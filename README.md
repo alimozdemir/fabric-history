@@ -31,7 +31,7 @@ canvas.undo();
 canvas.redo();
 ```
 
-# Example
+# Example (only for demo purposes)
 
 ```html
 <!doctype html>
@@ -41,9 +41,9 @@ canvas.redo();
   <title>Fabric with history</title>
 </head>
 <body>
-  <canvas></canvas>
+  <canvas style="border:1px solid black;" width="800" height="400"></canvas>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.4.0/fabric.min.js"></script>
-  <script src="//raw.githubusercontent.com/lyzerk/fabric-history/master/src/index.js"></script>
+  <script src="https://alimozdemir.com/fabric-history/src/index.js"></script>
 
   <script>
     const canvas = new fabric.Canvas(document.querySelector('canvas'), {
