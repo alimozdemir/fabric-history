@@ -36,7 +36,7 @@ fabric.Canvas.prototype._historyEvents = function() {
     'object:added': this._historySaveAction,
     'object:removed': this._historySaveAction,
     'object:modified': this._historySaveAction,
-    'object:skewing': this._historySaveAction
+    'object:skewing': this._historySaveAction,
   }
 }
 
@@ -46,7 +46,7 @@ fabric.Canvas.prototype._historyEvents = function() {
 fabric.Canvas.prototype._historyInit = function () {
   this.historyUndo = [];
   this.historyRedo = [];
-  this.extraProps = ['selectable'];
+  this.extraProps = ['selectable', 'editable'];
   this.historyNextState = this._historyNext();
   
   this.on(this._historyEvents());
@@ -137,17 +137,17 @@ fabric.Canvas.prototype.clearHistory = function() {
 }
 
 /**
+ * On the history
+ */
+ fabric.Canvas.prototype.onHistory = function() {
+  this.historyProcessing = false;
+
+  this._historySaveAction();
+}
+
+/**
  * Off the history
  */
 fabric.Canvas.prototype.offHistory = function() {
   this.historyProcessing = true;
-}
-
-/**
- * On the history
- */
-fabric.Canvas.prototype.onHistory = function() {
-  this.historyProcessing = false;
-
-  this._historySaveAction();
 }

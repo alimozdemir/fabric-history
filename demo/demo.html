@@ -17,6 +17,7 @@
                 <button onclick="drawingMode()">Enable drawing mode</button>
                 <button onclick="undo()">Undo</button>
                 <button onclick="redo()">Redo</button>
+                <button onclick="clearCanvas()">Clear canvas</button>
                 <button onclick="removeActiveObject()">Remove</button>
             </div>
             <div class="col-2">
@@ -33,26 +34,35 @@
     </div>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.4.0/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js"></script>
     <script src="libs/jsonviewer.js"></script>
     <script src="../src/index.js"></script>
     <script>
         let isDrawingMode = false;
         const canvas = new fabric.Canvas(document.querySelector('canvas'));
+        canvas.extraProps = ['selectable', 'editable']
         var rect1 = new fabric.Rect({
             width: 100, height: 100,
             top: 20, left: 20
         });
+
         var rect2 = new fabric.Rect({
             width: 100, height: 100,
-            top: 40, left: 40, fill: 'red'
+            top: 40, left: 40, fill: 'red',
+            selectable: false
+        });
+
+        var text1 = new fabric.IText('Hello world', {
+            fill: 'gray', top: 200, left: 100,
+            editable: true,
         });
 
         
         canvas.add(rect1);
         canvas.add(rect2);
+        canvas.add(text1);
         canvas.on('history:append', historyAppend);
-
+        
         var container = document.getElementById('wrapper');
         // var json = '{"jsonArgCanBeJsonString": true}';
         var json = { notSelected: true };
@@ -96,6 +106,10 @@
         }
         function redo() {
             canvas.redo();
+        }
+
+        function clearCanvas() {
+            canvas.clear();
         }
 
         function removeActiveObject() {
