@@ -34,7 +34,7 @@ canvas.redo();
 ## Excluding Objects
 Objects can be excluded from history by setting the excludeFromExport property to true on the object. This prevents any history records for actions involving this object.
 
-```
+```javascript
 const text = new fabric.Text('Hello', {
   excludeFromExport: true // This object will not be recorded in history.
 });
