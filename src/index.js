@@ -32,10 +32,10 @@ fabric.Canvas.prototype._historyNext = function () {
  */
 fabric.Canvas.prototype._historyEvents = function () {
   return {
-    'object:added': this._historySaveAction,
-    'object:removed': this._historySaveAction,
-    'object:modified': this._historySaveAction,
-    'object:skewing': this._historySaveAction,
+    'object:added': (e) => this._historySaveAction(e),
+    'object:removed': (e) => this._historySaveAction(e),
+    'object:modified': (e) => this._historySaveAction(e),
+    'object:skewing': (e) => this._historySaveAction(e),
   };
 };
 
@@ -61,13 +61,14 @@ fabric.Canvas.prototype._historyDispose = function () {
 /**
  * It pushes the state of the canvas into history stack
  */
-fabric.Canvas.prototype._historySaveAction = function () {
+fabric.Canvas.prototype._historySaveAction = function (e) {
   if (this.historyProcessing) return;
-
-  const json = this.historyNextState;
-  this.historyUndo.push(json);
-  this.historyNextState = this._historyNext();
-  this.fire('history:append', { json: json });
+  if (!e || (e.target && !e.target.excludeFromExport)) {
+    const json = this._historyNext();
+    this.historyUndo.push(json);
+    this.historyNextState = this._historyNext();
+    this.fire('history:append', { json: json });
+  }
 };
 
 /**
