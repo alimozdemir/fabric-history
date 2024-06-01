@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lyzerk/fabric-history.git"
+    "url": "git+https://github.com/alimozdemir/fabric-history.git"
   },
   "dependencies": {
     "fabric": "^5.3.0"
@@ -24,9 +24,9 @@
   "author": "Alim Ozdemir <alm.ozdmr@gmail.com> (http://alimozdemir.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lyzerk/fabric-history/issues"
+    "url": "https://github.com/alimozdemir/fabric-history/issues"
   },
-  "homepage": "https://github.com/lyzerk/fabric-history#readme",
+  "homepage": "https://github.com/alimozdemir/fabric-history#readme",
   "devDependencies": {
     "uglify-js": "^3.17.4"
   }
