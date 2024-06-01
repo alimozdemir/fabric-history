@@ -14,11 +14,13 @@
         <div class="row">
             <div class="col-6">
                 <canvas width="600" height="500"></canvas>
-                <button onclick="drawingMode()">Enable drawing mode</button>
-                <button onclick="undo()">Undo</button>
-                <button onclick="redo()">Redo</button>
-                <button onclick="clearCanvas()">Clear canvas</button>
-                <button onclick="removeActiveObject()">Remove</button>
+                <div class="mt-2">
+                    <button onclick="drawingMode()">Enable drawing mode</button>
+                    <button onclick="undo()">Undo</button>
+                    <button onclick="redo()">Redo</button>
+                    <button onclick="clearCanvas()">Clear canvas</button>
+                    <button onclick="removeActiveObject()">Remove</button>
+                </div>
             </div>
             <div class="col-2">
                 <select name="logs" id="logs" size="100">
@@ -130,8 +132,6 @@
         }
         
         document.addEventListener('keyup', ({ keyCode, ctrlKey } = event) => {
-
-            console.log(keyCode);
 
             if (keyCode === 8) {
                 removeActiveObject();
